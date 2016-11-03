@@ -1,0 +1,202 @@
+Mr
+Mrs
+Ms
+Miss
+Dr
+Herr
+Monsieur
+Hr
+Frau
+Admiraal
+Admiral
+Air Cdre
+Air Commodore
+Air Marshal
+Air Vice Marshal
+Alderman
+Alhaji
+Ambassador
+Baron
+Barones
+Brig
+Brig Gen
+Brig General
+Brigadier
+Brigadier General
+Brother
+Canon
+Capt
+Captain
+Cardinal
+Cdr
+Chief
+Cik
+Cmdr
+Col
+Col Dr
+Colonel
+Commandant
+Commander
+Commissioner
+Commodore
+Comte
+Comtessa
+Congressman
+Conseiller
+Consul
+Conte
+Contessa
+Corporal
+Councillor
+Count
+Countess
+Crown Prince
+Crown Princess
+Dame
+Datin
+Dato
+Datuk
+Datuk Seri
+Deacon
+Deaconess
+Dean
+Dhr
+Dipl Ing
+Doctor
+Dott
+Dott sa
+Dr
+Dr Ing
+Dra
+Drs
+Embajador
+Embajadora
+En
+Encik
+Eng
+Eur Ing
+Exma Sra
+Exmo Sr
+F O
+Father
+First Lieutient
+First Officer
+Flt Lieut
+Flying Officer
+Fr
+Frau
+Fraulein
+Fru
+Gen
+Generaal
+General
+Governor
+Graaf
+Gravin
+Group Captain
+Grp Capt
+H E Dr
+H H
+H M
+H R H
+Hajah
+Haji
+Hajim
+Her Highness
+Her Majesty
+Herr
+High Chief
+His Highness
+His Holiness
+His Majesty
+Hon
+Hr
+Hra
+Ing
+Ir
+Jonkheer
+Judge
+Justice
+Khun Ying
+Kolonel
+Lady
+Lcda
+Lic
+Lieut
+Lieut Cdr
+Lieut Col
+Lieut Gen
+Lord
+M
+M L
+M R
+Madame
+Mademoiselle
+Maj Gen
+Major
+Master
+Mevrouw
+Miss
+Mlle
+Mme
+Monsieur
+Monsignor
+Mr
+Mrs
+Ms
+Mstr
+Nti
+Pastor
+President
+Prince
+Princess
+Princesse
+Prinses
+Prof
+Prof Dr
+Prof Sir
+Professor
+Puan
+Puan Sri
+Rabbi
+Rear Admiral
+Rev
+Rev Canon
+Rev Dr
+Rev Mother
+Reverend
+Rva
+Senator
+Sergeant
+Sheikh
+Sheikha
+Sig
+Sig na
+Sig ra
+Sir
+Sister
+Sqn Ldr
+Sr
+Sr D
+Sra
+Srta
+Sultan
+Tan Sri
+Tan Sri Dato
+Tengku
+Teuku
+Than Puying
+The Hon Dr
+The Hon Justice
+The Hon Miss
+The Hon Mr
+The Hon Mrs
+The Hon Ms
+The Hon Sir
+The Very Rev
+Toh Puan
+Tun
+Vice Admiral
+Viscount
+Viscountess
+Wg Cdr

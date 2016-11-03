@@ -1,0 +1,13 @@
+metadata:
+  labels:
+    hystrix.enabled: "true"
+spec:
+  selector:
+    matchLabels:
+      hystrix.enabled: "true"
+  template:
+    metadata:
+      labels:
+        hystrix.enabled: "true"
+    spec:
+      serviceAccountName: "name-client-service"

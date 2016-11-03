@@ -1,0 +1,122 @@
+---
+apiVersion: "v1"
+items:
+- apiVersion: "v1"
+  kind: "ServiceAccount"
+  metadata:
+    name: "ribbon"
+- apiVersion: "v1"
+  kind: "ServiceAccount"
+  metadata:
+    name: "turbine"
+- apiVersion: "extensions/v1beta1"
+  kind: "Deployment"
+  metadata:
+    labels:
+      project: "hystrix-dashboard"
+      provider: "fabric8"
+      group: "io.fabric8.kubeflix"
+    name: "hystrix-dashboard"
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        project: "hystrix-dashboard"
+        provider: "fabric8"
+        group: "io.fabric8.kubeflix"
+    template:
+      metadata:
+        labels:
+          project: "hystrix-dashboard"
+          provider: "fabric8"
+          group: "io.fabric8.kubeflix"
+      spec:
+        containers:
+        - env:
+          - name: "KUBERNETES_NAMESPACE"
+            valueFrom:
+              fieldRef:
+                fieldPath: "metadata.namespace"
+          image: "jamesnetherton/hystrix-dashboard:1.0.26"
+          imagePullPolicy: "IfNotPresent"
+          name: "hystrix-dashboard"
+          ports:
+          - containerPort: 8080
+            name: "http"
+        serviceAccountName: "ribbon"
+- apiVersion: "extensions/v1beta1"
+  kind: "Deployment"
+  metadata:
+    labels:
+      project: "turbine-server"
+      provider: "fabric8"
+      group: "io.fabric8.kubeflix"
+    name: "turbine-server"
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        project: "turbine-server"
+        provider: "fabric8"
+        group: "io.fabric8.kubeflix"
+    template:
+      metadata:
+        labels:
+          project: "turbine-server"
+          provider: "fabric8"
+          group: "io.fabric8.kubeflix"
+      spec:
+        containers:
+        - env:
+          - name: "KUBERNETES_NAMESPACE"
+            valueFrom:
+              fieldRef:
+                fieldPath: "metadata.namespace"
+          image: "fabric8/turbine-server:1.0.26"
+          imagePullPolicy: "IfNotPresent"
+          name: "turbine-server"
+          ports:
+          - containerPort: 8080
+            name: "http"
+          - containerPort: 8778
+            name: "jolokia"
+        serviceAccountName: "turbine"
+- apiVersion: "v1"
+  kind: "Service"
+  metadata:
+    labels:
+      project: "hystrix-dashboard"
+      provider: "fabric8"
+      group: "io.fabric8.kubeflix"
+    name: "hystrix-dashboard"
+  spec:
+    ports:
+    - port: 80
+      protocol: "TCP"
+      targetPort: 8080
+    selector:
+      project: "hystrix-dashboard"
+      provider: "fabric8"
+      group: "io.fabric8.kubeflix"
+    type: "NodePort"
+- apiVersion: "v1"
+  kind: "Service"
+  metadata:
+    annotations:
+      servicepath: "/turbine.stream"
+    labels:
+      project: "turbine-server"
+      provider: "fabric8"
+      group: "io.fabric8.kubeflix"
+    name: "turbine-server"
+  spec:
+    ports:
+    - port: 80
+      protocol: "TCP"
+      targetPort: 8080
+    selector:
+      project: "turbine-server"
+      provider: "fabric8"
+      group: "io.fabric8.kubeflix"
+    type: "NodePort"
+kind: "List"

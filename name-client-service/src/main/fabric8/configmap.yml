@@ -1,0 +1,6 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: client-service-config
+data:
+  timer.period: 10000

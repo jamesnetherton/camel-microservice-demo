@@ -1,0 +1,9 @@
+metadata:
+  labels:
+  name: "name-prefix-service"
+spec:
+  ports:
+  - port: 80
+    protocol: "TCP"
+    targetPort: 8080
+  type: "NodePort"
