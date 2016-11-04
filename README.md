@@ -74,7 +74,7 @@ Once everything is up and running, we can connect to the Hystrix dashboard via i
     NodePort:		  <unset>	31137/TCP
     Endpoints:	     172.17.0.3:8080
 
-In the above example you would browse to http://<cluster ip>:31137 and the Hystrix Dashboard should be displayed. You can accept the default URL of http://turbine-server/turbine.stream and click the 'Monitor Stream' button.
+In the above example you would browse to [http://your-cluster-ip:31137]() and the Hystrix Dashboard should be displayed. You can accept the default URL of [http://turbine-server/turbine.stream]() and click the 'Monitor Stream' button.
 
 Initially you'll be presented with nothing more than a 'Loading...' message, because there are
 no deployed applications emitting Hystrix events.
@@ -84,6 +84,8 @@ no deployed applications emitting Hystrix events.
 Some of the sample applications use Zipkin for tracing. To deploy the Zipkin server and the web UI do:
 
     kubectl create -f zipkin/deployment.yml
+
+Once the Zipkin pod is up and running you can access the web UI by using the method outlined above for finding the Zipkin service NodePort.
 
 ### Deploy sample applications
 
@@ -97,6 +99,20 @@ To build and deploy each application to the cluster do:
 
     mvn fabric8:deploy
 
+When each pod has successfully started you can change into the `name-service-client` directory and tail the pod log:
+
+    cd name-service-client
+    mvn fabric8:log
+
+You should start to see random names being output to the console every 10 seconds.
+
+#### Changing the name generation period
+
+By default, names are generated every 10 seconds. To change this do:
+
+    kubectl edit configmap client-service-config
+
+Then modify the `timer.period` property. Saving the changes will reflect immediately in the running application.
 
 ## Running locally
 
