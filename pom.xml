@@ -20,7 +20,7 @@
     <lolcat.version>0.2.0</lolcat.version>
     <resteasy.version>3.0.19.Final</resteasy.version>
     <spring-boot.version>1.4.1.RELEASE</spring-boot.version>
-    <wildfly-swarm.version>2016.11.0-SNAPSHOT</wildfly-swarm.version>
+    <wildfly-swarm.version>2016.11.0</wildfly-swarm.version>
 
     <fabric8.maven.plugin.version>3.1.80</fabric8.maven.plugin.version>
     <maven.compiler.plugin.version>3.5.1</maven.compiler.plugin.version>
