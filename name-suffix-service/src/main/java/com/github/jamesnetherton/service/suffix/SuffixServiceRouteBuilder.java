@@ -2,11 +2,9 @@ package com.github.jamesnetherton.service.suffix;
 
 import com.github.jamesnetherton.service.suffix.processor.LastNameProcessor;
 import org.apache.camel.builder.RouteBuilder;
-import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.stereotype.Component;
 
 @Component
-@ServletComponentScan(basePackages = "com.github.jamesnetherton.service.suffix.servlet")
 public class SuffixServiceRouteBuilder extends RouteBuilder {
 
     @Override

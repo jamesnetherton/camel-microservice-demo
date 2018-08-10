@@ -4,5 +4,5 @@ spec:
   ports:
   - port: 80
     protocol: "TCP"
-    targetPort: 8080
+    targetPort: 8082
   type: "NodePort"

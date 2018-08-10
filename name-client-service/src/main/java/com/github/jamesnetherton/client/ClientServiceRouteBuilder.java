@@ -1,7 +1,6 @@
 package com.github.jamesnetherton.client;
 
 import com.github.jamesnetherton.lolcat4j.Lol;
-import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.cdi.ContextName;
 
@@ -15,15 +14,15 @@ public class ClientServiceRouteBuilder extends RouteBuilder {
     public void configure() throws Exception {
         from("timer:generateName?period=10000").id("name-client-service")
         .hystrix()
-            .bean("nameGenerator")
+           .bean("nameGenerator")
         .onFallback()
             .setBody(constant("Sorry. Name could not be generated."))
         .end()
-        .process((Processor) exchange -> {
+        .process(exchange -> {
             String name = exchange.getIn().getBody(String.class);
             Lol lol = Lol.builder()
-                        .text(name)
-                        .build();
+                .text(name)
+                .build();
             lol.cat();
         });
     }

@@ -19,9 +19,9 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>org.wildfly.swarm</groupId>
-        <artifactId>bom-all</artifactId>
-        <version>${wildfly-swarm.version}</version>
+        <groupId>io.thorntail</groupId>
+        <artifactId>bom</artifactId>
+        <version>${version.io.throntail}</version>
         <scope>import</scope>
         <type>pom</type>
       </dependency>
@@ -30,34 +30,26 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.jboss.resteasy</groupId>
-      <artifactId>resteasy-client</artifactId>
-      <version>${resteasy.version}</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.wildfly.swarm</groupId>
+      <groupId>io.thorntail</groupId>
       <artifactId>camel-cdi</artifactId>
     </dependency>
-    <!-- Ideally you'd use this instead of introducing the camel dependencies below
     <dependency>
-      <groupId>org.wildfly.swarm</groupId>
-      <artifactId>camel-other</artifactId>
-    </dependency>
-    -->
-    <dependency>
-      <groupId>org.wildfly.swarm</groupId>
-      <artifactId>zipkin-jaxrs</artifactId>
+      <groupId>io.thorntail</groupId>
+      <artifactId>jaeger</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-hystrix</artifactId>
-      <version>${camel.version}</version>
+      <groupId>commons-configuration</groupId>
+      <artifactId>commons-configuration</artifactId>
+      <version>1.9</version>
+    </dependency>
+    <dependency>
+      <groupId>io.thorntail</groupId>
+      <artifactId>jaxrs</artifactId>
     </dependency>
     <dependency>
       <groupId>com.github.jamesnetherton</groupId>
       <artifactId>lolcat4j</artifactId>
-      <version>${lolcat.version}</version>
+      <version>${version.com.github.jamesnetherton.lolcat4j}</version>
     </dependency>
     <dependency>
       <groupId>com.netflix.hystrix</groupId>
@@ -67,13 +59,18 @@
     <dependency>
       <groupId>io.fabric8</groupId>
       <artifactId>kubernetes-client</artifactId>
-      <version>${kubernetes-client.version}</version>
+      <version>${version.io.fabric8.kubernetes.client}</version>
     </dependency>
     <dependency>
-      <groupId>io.fabric8</groupId>
-      <artifactId>fabric8-arquillian</artifactId>
-      <version>${fabric8.version}</version>
-      <scope>test</scope>
+      <groupId>io.opentracing.contrib</groupId>
+      <artifactId>opentracing-jaxrs2</artifactId>
+      <version>${version.io.opentracing.jaxrs2}</version>
+    </dependency>
+    <!-- Ideally we would use io.thorntail:camel-hystrix but it fails to find module org.apache.commons.configuration -->
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-hystrix</artifactId>
+      <version>${version.org.apache.camel}</version>
     </dependency>
   </dependencies>
 
@@ -84,11 +81,8 @@
         <artifactId>maven-war-plugin</artifactId>
       </plugin>
       <plugin>
-        <groupId>org.wildfly.swarm</groupId>
-        <artifactId>wildfly-swarm-plugin</artifactId>
-        <configuration>
-          <mainClass>com.github.jamesnetherton.client.Main</mainClass>
-        </configuration>
+        <groupId>io.thorntail</groupId>
+        <artifactId>thorntail-maven-plugin</artifactId>
         <executions>
           <execution>
             <id>package</id>
@@ -102,11 +96,12 @@
               <goal>run</goal>
             </goals>
             <configuration>
-              <useUberJar>true</useUberJar>
               <properties>
-                <env.NAME_PREFIX_SERVICE_HOST>localhost:8081</env.NAME_PREFIX_SERVICE_HOST>
                 <java.net.preferIPv4Stack>true</java.net.preferIPv4Stack>
               </properties>
+              <environment>
+                <NAME_PREFIX_SERVICE_SERVICE_HOST>localhost:8081</NAME_PREFIX_SERVICE_SERVICE_HOST>
+              </environment>
             </configuration>
           </execution>
         </executions>
@@ -130,10 +125,6 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-failsafe-plugin</artifactId>
       </plugin>
     </plugins>
   </build>

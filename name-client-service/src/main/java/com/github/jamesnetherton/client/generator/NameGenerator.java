@@ -1,11 +1,11 @@
 package com.github.jamesnetherton.client.generator;
 
 import org.apache.camel.PropertyInject;
-import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.Response;
@@ -26,9 +26,9 @@ public class NameGenerator {
     private Random random = new Random();
 
     @Inject
-    private ResteasyClient client;
+    private Client client;
 
-    @PropertyInject(value = "env.NAME_PREFIX_SERVICE_HOST", defaultValue = "name-prefix-service")
+    @PropertyInject(value = "NAME_PREFIX_SERVICE_SERVICE_HOST", defaultValue = "localhost:8081")
     private String prefixServiceHost;
 
     public NameGenerator() {

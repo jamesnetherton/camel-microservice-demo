@@ -17,7 +17,7 @@ public class PrefixServiceRouteBuilder extends RouteBuilder {
             .post("/name/prefix")
                 .route().routeId("name-prefix-service")
                     .process(new TitleProcessor())
-                    .to("http://{{suffix.service.host.name}}/api/name/suffix").routeId("name-suffix-service")
+                    .to("http://{{suffix.service.host.name}}/api/name/suffix")
                 .end();
     }
 }

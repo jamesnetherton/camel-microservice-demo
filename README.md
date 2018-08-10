@@ -5,7 +5,7 @@ A small set of [Apache Camel](http://camel.apache.org) Microservice applications
 Demonstrates running two different flavours of Camel Microservice on [Kubernetes](http://kubernetes.io/) and [OpenShift](https://www.openshift.com/):
 
 * Camel with [Spring Boot](https://projects.spring.io/spring-boot/)
-* Camel with [WildFly Swarm](http://wildfly-swarm.io/)
+* Camel with [Throntail](https://thorntail.io/)
 * [Hystirx](https://github.com/Netflix/Hystrix)
 * [Zipkin](http://zipkin.io/)
 
@@ -36,16 +36,13 @@ The example applications can be deployed to either a Kubernetes or OpenShift clu
 > __Note:__ For brevity, kubectl is used as the cluster client command. If you're using OpenShift,
 substitue kubectl for oc.
 
-### Deploy Hystrix Dashboard & Turbine Server
+To deploy OpenTracing and Hystrix servers run:
 
-When deploying to OpenShift, grant the view role to service accounts:
+    kubectl create -f deployment-kubernetes.yml
 
-    oc policy add-role-to-user view system:serviceaccount:$(oc project -q):turbine
-    oc policy add-role-to-user view system:serviceaccount:$(oc project -q):name-client-service
+For OpenShift run:
 
-You'll need to deploy the Hystrix dashboard and the Turbine server:
-
-    kubectl create -f hystrix/deployment.yml
+    oc create -f deployment-openshift.yml
 
 Depending on the speed of your connection it may take a while for the images to be pulled. You
 can check progress by examining the pod status:
@@ -79,13 +76,11 @@ In the above example you would browse to [http://your-cluster-ip:31137]() and th
 Initially you'll be presented with nothing more than a 'Loading...' message, because there are
 no deployed applications emitting Hystrix events.
 
-### Deploy Zipkin server
+Once the OpenTracing pod is up and running you can access the web UI by using the method outlined above for finding the OpenTracing service NodePort.
 
-Some of the sample applications use Zipkin for tracing. To deploy the Zipkin server and the web UI do:
+For OpenShift you can use the route URL to access the services. You can view the service URLs by running:
 
-    kubectl create -f zipkin/deployment.yml
-
-Once the Zipkin pod is up and running you can access the web UI by using the method outlined above for finding the Zipkin service NodePort.
+    oc get route opentracing hystrix-dashboard
 
 ### Deploy sample applications
 
@@ -116,24 +111,15 @@ Then modify the `timer.period` property. Saving the changes will reflect immedia
 
 ## Running locally
 
-You can run each service locally via the Spring Boot and Swarm Maven plugins.
+You can run each service locally via the Spring Boot and Thorntail Maven plugins.
 
 For the client do:
 
-    mvn wildfly-swarm:run
-
-> Note: It's safe to ignore the ArtifactResolutionException thrown from the Swarm plugin.
+    mvn thorntail:run
 
 For the other two services do:
 
     mvn spring-boot:run
-
-## Running integration tests
-
-Each module has a basic [fabric8-arquillian](https://github.com/fabric8io/fabric8/tree/master/components/fabric8-arquillian) integration test.
-By default integration tests are skipped. You can enabled them with:
-
-    mvn install -DskipITs=false
 
 ### Cleaning up
 

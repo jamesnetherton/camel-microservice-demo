@@ -1,0 +1,191 @@
+---
+apiVersion: "v1"
+items:
+- apiVersion: "v1"
+  kind: "ServiceAccount"
+  metadata:
+    name: "camel-microservice-demo"
+- apiVersion: rbac.authorization.k8s.io/v1beta1
+  kind: Role
+  metadata:
+    name: camel-microservice-demo-role
+  rules:
+  - apiGroups: [""]
+    resources: ["endpoints", "configmaps"]
+    verbs: ["get", "list", "watch"]
+- apiVersion: rbac.authorization.k8s.io/v1beta1
+  kind: RoleBinding
+  metadata:
+    name: camel-microservice-demo-role-binding
+  subjects:
+  - kind: ServiceAccount
+    name: camel-microservice-demo
+    apiGroup: ""
+  roleRef:
+    kind: Role
+    name: camel-microservice-demo-role
+    apiGroup: ""
+- apiVersion: "extensions/v1beta1"
+  kind: "Deployment"
+  metadata:
+    labels:
+      project: "hystrix-dashboard"
+      provider: "fabric8"
+      group: "io.fabric8.kubeflix"
+    name: "hystrix-dashboard"
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        project: "hystrix-dashboard"
+        provider: "fabric8"
+        group: "io.fabric8.kubeflix"
+    template:
+      metadata:
+        labels:
+          project: "hystrix-dashboard"
+          provider: "fabric8"
+          group: "io.fabric8.kubeflix"
+      spec:
+        containers:
+        - env:
+          - name: "KUBERNETES_NAMESPACE"
+            valueFrom:
+              fieldRef:
+                fieldPath: "metadata.namespace"
+          image: "jamesnetherton/hystrix-dashboard:1.0.26"
+          imagePullPolicy: "IfNotPresent"
+          name: "hystrix-dashboard"
+          ports:
+          - containerPort: 8080
+            name: "http"
+        serviceAccountName: "camel-microservice-demo"
+- apiVersion: "extensions/v1beta1"
+  kind: "Deployment"
+  metadata:
+    labels:
+      project: "turbine-server"
+      provider: "fabric8"
+      group: "io.fabric8.kubeflix"
+    name: "turbine-server"
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        project: "turbine-server"
+        provider: "fabric8"
+        group: "io.fabric8.kubeflix"
+    template:
+      metadata:
+        labels:
+          project: "turbine-server"
+          provider: "fabric8"
+          group: "io.fabric8.kubeflix"
+      spec:
+        containers:
+        - env:
+          - name: "KUBERNETES_NAMESPACE"
+            valueFrom:
+              fieldRef:
+                fieldPath: "metadata.namespace"
+          image: "fabric8/turbine-server:1.0.26"
+          imagePullPolicy: "IfNotPresent"
+          name: "turbine-server"
+          ports:
+          - containerPort: 8080
+            name: "http"
+          - containerPort: 8778
+            name: "jolokia"
+        serviceAccountName: "camel-microservice-demo"
+- apiVersion: "v1"
+  kind: "Service"
+  metadata:
+    labels:
+      project: "hystrix-dashboard"
+      provider: "fabric8"
+      group: "io.fabric8.kubeflix"
+    name: "hystrix-dashboard"
+  spec:
+    ports:
+    - port: 80
+      protocol: "TCP"
+      targetPort: 8080
+    selector:
+      project: "hystrix-dashboard"
+      provider: "fabric8"
+      group: "io.fabric8.kubeflix"
+    type: "NodePort"
+- apiVersion: "v1"
+  kind: "Service"
+  metadata:
+    annotations:
+      servicepath: "/turbine.stream"
+    labels:
+      project: "turbine-server"
+      provider: "fabric8"
+      group: "io.fabric8.kubeflix"
+    name: "turbine-server"
+  spec:
+    ports:
+    - port: 80
+      protocol: "TCP"
+      targetPort: 8080
+    selector:
+      project: "turbine-server"
+      provider: "fabric8"
+      group: "io.fabric8.kubeflix"
+    type: "NodePort"
+- apiVersion: "extensions/v1beta1"
+  kind: "Deployment"
+  metadata:
+    labels:
+      project: "opentracing"
+      provider: "fabric8"
+    name: "opentracing"
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        project: "opentracing"
+        provider: "fabric8"
+    template:
+      metadata:
+        labels:
+          project: "opentracing"
+          provider: "fabric8"
+      spec:
+        containers:
+        - env:
+          - name: "KUBERNETES_NAMESPACE"
+            valueFrom:
+              fieldRef:
+                fieldPath: "metadata.namespace"
+          image: "jaegertracing/all-in-one:latest"
+          imagePullPolicy: "IfNotPresent"
+          name: "opentracing"
+          ports:
+          - containerPort: 6831
+            protocol: UDP
+          - containerPort: 16686
+- apiVersion: "v1"
+  kind: "Service"
+  metadata:
+    labels:
+      project: "opentracing"
+      provider: "fabric8"
+    name: "opentracing"
+  spec:
+    ports:
+    - port: 80
+      name: "opentracing-web"
+      protocol: "TCP"
+      targetPort: 16686
+    - port: 6831
+      name: "opentracing-data"
+      protocol: "UDP"
+      targetPort: 6831
+    selector:
+      project: "opentracing"
+      provider: "fabric8"
+    type: "NodePort"
+kind: "List"

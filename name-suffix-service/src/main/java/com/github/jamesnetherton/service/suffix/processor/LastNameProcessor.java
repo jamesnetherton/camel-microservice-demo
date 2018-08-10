@@ -27,7 +27,7 @@ public class LastNameProcessor implements Processor {
         String randomLastName = lastNames.get(random.nextInt(lastNames.size() - 1));
         String randomWord = words.get(random.nextInt(words.size() - 1));
 
-        exchange.getOut().setBody(name + " " + randomLastName + "-" + randomWord);
+        exchange.getIn().setBody(name + " " + randomLastName + "-" + randomWord);
     }
 
     private void buildList(List<String> list, String resource) {

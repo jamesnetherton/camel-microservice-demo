@@ -46,8 +46,12 @@ public class ConfigMapWatcher {
 
                         String timerPeriod = configMap.getData().get("timer.period");
                         Route route = context.getRoute("name-client-service");
-                        TimerConsumer consumer = (TimerConsumer) route.getConsumer();
+                        if (route == null) {
+                            LOG.error("Failed updating timer.period. Route name-client-service not found.");
+                            return;
+                        }
 
+                        TimerConsumer consumer = (TimerConsumer) route.getConsumer();
                         LOG.info("Adjusting timer period to {}ms", timerPeriod);
                         consumer.getEndpoint().setPeriod(Long.parseLong(timerPeriod));
 
