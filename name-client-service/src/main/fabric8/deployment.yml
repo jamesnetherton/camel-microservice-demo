@@ -29,3 +29,14 @@ spec:
           value: "opentracing"
         - name: "JAEGER_AGENT_PORT"
           value: "6831"
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+            scheme: HTTP
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 180

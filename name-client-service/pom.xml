@@ -38,9 +38,8 @@
       <artifactId>jaeger</artifactId>
     </dependency>
     <dependency>
-      <groupId>commons-configuration</groupId>
-      <artifactId>commons-configuration</artifactId>
-      <version>1.9</version>
+      <groupId>io.thorntail</groupId>
+      <artifactId>microprofile-health</artifactId>
     </dependency>
     <dependency>
       <groupId>io.thorntail</groupId>
