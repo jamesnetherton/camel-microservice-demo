@@ -1,18 +1,39 @@
 version: '3.3'
 
 services:
-  opentracing:
-    image: jaegertracing/all-in-one:latest
+
+  cadvisor:
+    image: google/cadvisor
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
     ports:
-      - "6831:6831/udp"
-      - "16686:16686"
+      - 8181:8080
+
+  grafana:
+    image: grafana/grafana
+    user: "472"
+    depends_on:
+      - prometheus
+    environment:
+      GF_AUTH_DISABLE_LOGIN_FORM: "true"
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+    ports:
+      - 3000:3000
+    volumes:
+      - ./etc/grafana/provisioning/:/etc/grafana/provisioning/
 
   name-suffix-service:
     depends_on:
       - opentracing
+      - grafana
     image: jamesnetherton/microservice-demo-suffix-service:latest
     ports:
       - "8082:8082"
+    volumes:
+      - ./etc/prometheus/agent/prometheus-config.yml:/opt/agent-bond/jmx_exporter_config.yml
 
   name-prefix-service:
     depends_on:
@@ -22,6 +43,8 @@ services:
       JAVA_OPTIONS: -Dsuffix.service.host.name=name-suffix-service:8082
     ports:
       - "8081:8081"
+    volumes:
+      - ./etc/prometheus/agent/prometheus-config.yml:/opt/agent-bond/jmx_exporter_config.yml
 
   name-client-service:
     depends_on:
@@ -39,3 +62,34 @@ services:
       NAME_PREFIX_SERVICE_SERVICE_HOST: name-prefix-service:8081
     ports:
       - "8080:8080"
+
+  node-exporter:
+    image: prom/node-exporter
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - --collector.filesystem.ignored-mount-points
+      - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
+    ports:
+      - 9100:9100
+
+  opentracing:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "6831:6831/udp"
+      - "16686:16686"
+
+  prometheus:
+    image: prom/prometheus:v2.5.0
+    volumes:
+      - ./etc/prometheus/server/:/etc/prometheus/
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - 9090:9090
+    depends_on:
+      - cadvisor

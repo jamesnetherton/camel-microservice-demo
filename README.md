@@ -121,7 +121,13 @@ Then start the services:
 
     docker compose up
 
-You should see some humorous names being output to the console. HTTP traces can be monitored in the Jaeger UI at [http://localhost:16686](http://localhost:16686).
+You should see some humorous names being output to the console.
+
+Some monitoring tools are available for you to view runtime metrics.
+
+* Jaeger [http://localhost:16686](http://localhost:16686)
+* Prometheus [http://localhost:9090](http://localhost:9090)
+* Grafana [http://localhost:3000](http://localhost:3000)
 
 ### Cleaning up
 
