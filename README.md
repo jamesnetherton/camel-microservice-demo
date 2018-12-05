@@ -111,15 +111,17 @@ Then modify the `timer.period` property. Saving the changes will reflect immedia
 
 ## Running locally
 
-You can run each service locally via the Spring Boot and Thorntail Maven plugins.
+The simplest way to run the project locally is with [docker-compose](https://docs.docker.com/compose/).
 
-For the client do:
+Make sure you have built the project docker images locally by running:
 
-    mvn thorntail:run
+    mvn clean install
 
-For the other two services do:
+Then start the services:
 
-    mvn spring-boot:run
+    docker compose up
+
+You should see some humorous names being output to the console. HTTP traces can be monitored in the Jaeger UI at [http://localhost:16686](http://localhost:16686).
 
 ### Cleaning up
 

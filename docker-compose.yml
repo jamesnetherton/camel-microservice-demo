@@ -1,0 +1,41 @@
+version: '3.3'
+
+services:
+  opentracing:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "6831:6831/udp"
+      - "16686:16686"
+
+  name-suffix-service:
+    depends_on:
+      - opentracing
+    image: jamesnetherton/microservice-demo-suffix-service:latest
+    ports:
+      - "8082:8082"
+
+  name-prefix-service:
+    depends_on:
+      - name-suffix-service
+    image: jamesnetherton/microservice-demo-prefix-service:latest
+    environment:
+      JAVA_OPTIONS: -Dsuffix.service.host.name=name-suffix-service:8082
+    ports:
+      - "8081:8081"
+
+  name-client-service:
+    depends_on:
+      - name-prefix-service
+    image: jamesnetherton/microservice-demo-client-service:latest
+    environment:
+      AB_OFF: "true"
+      JAEGER_SERVICE_NAME: camel-microservice-demo
+      JAEGER_REPORTER_LOG_SPANS: "false"
+      JAEGER_SAMPLER_TYPE: "const"
+      JAEGER_SAMPLER_PARAM: 1
+      JAEGER_AGENT_HOST: opentracing
+      JAEGER_AGENT_PORT: 6831
+      JAVA_OPTIONS: -Djava.net.preferIPv4Stack=true
+      NAME_PREFIX_SERVICE_SERVICE_HOST: name-prefix-service:8081
+    ports:
+      - "8080:8080"
