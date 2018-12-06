@@ -127,6 +127,7 @@ Some monitoring tools are available for you to view runtime metrics.
 
 * Jaeger [http://localhost:16686](http://localhost:16686)
 * Prometheus [http://localhost:9090](http://localhost:9090)
+* Prometheus Alertmanager [http://localhost:9093](http://localhost:9093)
 * Grafana [http://localhost:3000](http://localhost:3000)
 
 ### Cleaning up

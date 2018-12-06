@@ -1,0 +1,8 @@
+groups:
+  - name: camel-microservice-demo
+    rules:
+      - alert: PrefixServiceInstanceDown
+        expr: up{instance="name-prefix-service:9779"} == 0
+        for: 1m
+        annotations:
+          summary: Prefix Service Down

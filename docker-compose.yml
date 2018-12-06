@@ -2,7 +2,26 @@ version: '3.3'
 
 services:
 
+  alertmanager:
+    container_name: alertmanager
+    image: prom/alertmanager
+    depends_on:
+      - alert-webhook-logger
+    ports:
+      - 9093:9093
+    volumes:
+      - ./etc/prometheus/alertmanager/:/etc/alertmanager/
+    command:
+      - '--config.file=/etc/alertmanager/config.yml'
+
+  alert-webhook-logger:
+    container_name: alert-webhook-logger
+    image: jamesnetherton/alert-webhook-logger
+    ports:
+      - 9876:9876
+
   cadvisor:
+    container_name: cadvisor
     image: google/cadvisor
     volumes:
       - /:/rootfs:ro
@@ -13,6 +32,7 @@ services:
       - 8181:8080
 
   grafana:
+    container_name: grafana
     image: grafana/grafana
     user: "472"
     depends_on:
@@ -26,6 +46,7 @@ services:
       - ./etc/grafana/provisioning/:/etc/grafana/provisioning/
 
   name-suffix-service:
+    container_name: name-suffix-service
     depends_on:
       - opentracing
       - grafana
@@ -36,6 +57,7 @@ services:
       - ./etc/prometheus/agent/prometheus-config.yml:/opt/agent-bond/jmx_exporter_config.yml
 
   name-prefix-service:
+    container_name: name-prefix-service
     depends_on:
       - name-suffix-service
     image: jamesnetherton/microservice-demo-prefix-service:latest
@@ -47,6 +69,7 @@ services:
       - ./etc/prometheus/agent/prometheus-config.yml:/opt/agent-bond/jmx_exporter_config.yml
 
   name-client-service:
+    container_name: name-client-service
     depends_on:
       - name-prefix-service
     image: jamesnetherton/microservice-demo-client-service:latest
@@ -64,6 +87,7 @@ services:
       - "8080:8080"
 
   node-exporter:
+    container_name: node-exporter
     image: prom/node-exporter
     volumes:
       - /proc:/host/proc:ro
@@ -78,12 +102,14 @@ services:
       - 9100:9100
 
   opentracing:
+    container_name: opentracing
     image: jaegertracing/all-in-one:latest
     ports:
       - "6831:6831/udp"
       - "16686:16686"
 
   prometheus:
+    container_name: prometheus
     image: prom/prometheus:v2.5.0
     volumes:
       - ./etc/prometheus/server/:/etc/prometheus/
@@ -92,4 +118,5 @@ services:
     ports:
       - 9090:9090
     depends_on:
+      - alertmanager
       - cadvisor
