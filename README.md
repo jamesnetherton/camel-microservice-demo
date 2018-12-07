@@ -109,6 +109,19 @@ By default, names are generated every 10 seconds. To change this do:
 
 Then modify the `timer.period` property. Saving the changes will reflect immediately in the running application.
 
+#### Monitoring
+
+For OpenShift you can deploy [Prometheus](https://prometheus.io/) using a template. Change the `NAMESPACE` template parameter as necessary:
+
+    oc login -u system:admin
+    oc process -f etc/prometheus/deployment-openshift.yml -p NAMESPACE=myproject | oc create -f -
+
+Once everything is deployed you can access the Prometheus UI via its route URL:
+
+    oc get route prometheus
+
+Prometheus is configured to search for services annotated with a label named `group` with a value of `com.github.jamesnetherton`. Thus it automatically finds and scrapes the metrics endpoints for services deployed in this demonstration.
+
 ## Running locally
 
 The simplest way to run the project locally is with [docker-compose](https://docs.docker.com/compose/).
