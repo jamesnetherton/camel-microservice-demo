@@ -114,7 +114,7 @@ Then modify the `timer.period` property. Saving the changes will reflect immedia
 For OpenShift you can deploy [Prometheus](https://prometheus.io/) using a template. Change the `NAMESPACE` template parameter as necessary:
 
     oc login -u system:admin
-    oc process -f etc/prometheus/deployment-openshift.yml -p NAMESPACE=myproject | oc create -f -
+    oc process -f etc/prometheus/prometheus-openshift.yml -p NAMESPACE=myproject | oc create -f -
 
 Once everything is deployed you can access the Prometheus UI via its route URL:
 
