@@ -13,7 +13,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <version.org.apache.camel>2.23.0</version.org.apache.camel>
+    <version.org.apache.camel>2.23.1</version.org.apache.camel>
     <hystrix.verson>1.5.5</hystrix.verson>
     <version.io.jaegertracing>0.27.0</version.io.jaegertracing>
     <version.io.fabric8.kubernetes.client>1.4.7</version.io.fabric8.kubernetes.client>
