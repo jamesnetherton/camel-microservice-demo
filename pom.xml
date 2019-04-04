@@ -13,19 +13,19 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <version.org.apache.camel>2.23.1</version.org.apache.camel>
+    <version.org.apache.camel>3.0.0-M2</version.org.apache.camel>
     <hystrix.verson>1.5.5</hystrix.verson>
     <version.io.jaegertracing>0.27.0</version.io.jaegertracing>
     <version.io.fabric8.kubernetes.client>1.4.7</version.io.fabric8.kubernetes.client>
     <version.com.github.jamesnetherton.lolcat4j>0.3.0</version.com.github.jamesnetherton.lolcat4j>
     <version.io.opentracing.jaxrs2>0.3.1</version.io.opentracing.jaxrs2>
-    <version.org.springframework.spring.boot>2.1.0.RELEASE</version.org.springframework.spring.boot>
+    <version.org.springframework.spring.boot>2.1.3.RELEASE</version.org.springframework.spring.boot>
     <version.io.throntail>2.2.1.Final</version.io.throntail>
 
     <version.fabric8.maven.plugin>3.5.42</version.fabric8.maven.plugin>
-    <version.maven.compiler.plugin>3.5.1</version.maven.compiler.plugin>
-    <version.maven.failsafe.plugin>3.0.0-M1</version.maven.failsafe.plugin>
-    <version.maven.surefire.plugin>3.0.0-M1</version.maven.surefire.plugin>
+    <version.maven.compiler.plugin>3.8.0</version.maven.compiler.plugin>
+    <version.maven.failsafe.plugin>3.0.0-M3</version.maven.failsafe.plugin>
+    <version.maven.surefire.plugin>3.0.0-M3</version.maven.surefire.plugin>
     <version.maven.war.plugin>3.2.2</version.maven.war.plugin>
   </properties>
 

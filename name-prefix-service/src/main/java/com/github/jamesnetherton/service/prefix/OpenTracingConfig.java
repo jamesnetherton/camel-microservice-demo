@@ -3,8 +3,8 @@ package com.github.jamesnetherton.service.prefix;
 import io.jaegertracing.samplers.ConstSampler;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Exchange;
+import org.apache.camel.NamedNode;
 import org.apache.camel.Route;
-import org.apache.camel.model.RouteDefinition;
 import org.apache.camel.opentracing.OpenTracingTracer;
 import org.apache.camel.spi.RoutePolicy;
 import org.apache.camel.spi.RoutePolicyFactory;
@@ -55,7 +55,7 @@ public class OpenTracingConfig {
 
     static class TraceIdDecodingRoutePolicyFactory implements RoutePolicyFactory {
         @Override
-        public RoutePolicy createRoutePolicy(CamelContext camelContext, String routeId, RouteDefinition route) {
+        public RoutePolicy createRoutePolicy(CamelContext camelContext, String routeId, NamedNode route) {
             return new TraceIdDecodingRoutePolicy();
         }
     }
