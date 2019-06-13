@@ -22,7 +22,7 @@
     <version.org.springframework.spring.boot>2.1.5.RELEASE</version.org.springframework.spring.boot>
     <version.io.throntail>2.2.1.Final</version.io.throntail>
 
-    <version.fabric8.maven.plugin>3.5.42</version.fabric8.maven.plugin>
+    <version.fabric8.maven.plugin>4.1.0</version.fabric8.maven.plugin>
     <version.maven.compiler.plugin>3.8.0</version.maven.compiler.plugin>
     <version.maven.failsafe.plugin>3.0.0-M3</version.maven.failsafe.plugin>
     <version.maven.surefire.plugin>3.0.0-M3</version.maven.surefire.plugin>
