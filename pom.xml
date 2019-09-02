@@ -13,13 +13,13 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <version.org.apache.camel>3.0.0-M4</version.org.apache.camel>
+    <version.org.apache.camel>3.0.0-RC1</version.org.apache.camel>
     <hystrix.verson>1.5.5</hystrix.verson>
     <version.io.jaegertracing>0.27.0</version.io.jaegertracing>
     <version.io.fabric8.kubernetes.client>1.4.7</version.io.fabric8.kubernetes.client>
     <version.com.github.jamesnetherton.lolcat4j>0.3.0</version.com.github.jamesnetherton.lolcat4j>
     <version.io.opentracing.jaxrs2>0.3.1</version.io.opentracing.jaxrs2>
-    <version.org.springframework.spring.boot>2.1.5.RELEASE</version.org.springframework.spring.boot>
+    <version.org.springframework.spring.boot>2.1.7.RELEASE</version.org.springframework.spring.boot>
     <version.io.throntail>2.2.1.Final</version.io.throntail>
 
     <version.fabric8.maven.plugin>4.1.0</version.fabric8.maven.plugin>
