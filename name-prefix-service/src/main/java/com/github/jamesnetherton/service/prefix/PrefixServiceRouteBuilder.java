@@ -16,6 +16,7 @@ public class PrefixServiceRouteBuilder extends RouteBuilder {
         rest()
             .post("/name/prefix")
                 .route().routeId("name-prefix-service")
+                    .removeHeaders("CamelHttp*")
                     .process(new TitleProcessor())
                     .to("http://{{suffix.service.host.name}}/api/name/suffix")
                 .end();
