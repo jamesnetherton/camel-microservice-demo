@@ -10,7 +10,6 @@ import org.apache.camel.spi.RoutePolicy;
 import org.apache.camel.spi.RoutePolicyFactory;
 import org.apache.camel.support.RoutePolicySupport;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,7 +18,6 @@ import java.net.URLDecoder;
 import java.util.List;
 
 @Configuration
-@ConditionalOnProperty(value = {"OPENTRACING_SERVICE_HOST", "OPENTRACING_SERVICE_PORT_OPENTRACING_DATA"})
 public class OpenTracingConfig {
 
     @Bean
